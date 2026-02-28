@@ -1,0 +1,6 @@
+@SITech.NutritionApi_HostAddress = http://localhost:5206
+
+GET {{SITech.NutritionApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

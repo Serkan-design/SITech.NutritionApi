@@ -5,6 +5,11 @@ VisualStudioVersion = 17.14.37012.4 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SITech.NutritionApi", "SITech.NutritionApi\SITech.NutritionApi.csproj", "{44A2B839-A7BF-4305-9326-A4B1592622A3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Çözüm Öğeleri", "Çözüm Öğeleri", "{AC80F682-3D55-C8F8-4895-A4A9EDD49434}"
+	ProjectSection(SolutionItems) = preProject
+		..\SiTech.NutritionApi\SiTech.NutritionApi\Dockerfile = ..\SiTech.NutritionApi\SiTech.NutritionApi\Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

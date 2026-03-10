@@ -1,8 +1,0 @@
-[phases.setup]
-nixPkgs = ["dotnet-sdk_8"]
-
-[phases.build]
-cmds = ["dotnet publish SITech.NutritionApi/SITech.NutritionApi.csproj -c Release -o out"]
-
-[start]
-cmd = "dotnet out/SITech.NutritionApi.dll"

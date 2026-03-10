@@ -4,8 +4,8 @@ WORKDIR /src
 COPY . .
 
 WORKDIR /src/SITech.NutritionApi
-RUN dotnet restore
-RUN dotnet publish -c Release -o /app
+RUN dotnet restore SITech.NutritionApi.csproj
+RUN dotnet publish SITech.NutritionApi.csproj -c Release -o /app
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
@@ -14,4 +14,4 @@ COPY --from=build /app .
 
 ENV ASPNETCORE_URLS=http://0.0.0.0:$PORT
 
-ENTRYPOINT ["dotnet","SITech.NutritionApi.dll"]
+ENTRYPOINT ["dotnet", "SITech.NutritionApi.dll"]

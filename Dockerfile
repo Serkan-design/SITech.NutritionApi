@@ -1,16 +1,17 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /app
+WORKDIR /src
+
+COPY ["SITech.NutritionApi/SITech.NutritionApi.csproj", "SITech.NutritionApi/"]
+RUN dotnet restore "SITech.NutritionApi/SITech.NutritionApi.csproj"
 
 COPY . .
-
-RUN dotnet restore SITech.NutritionApi/SITech.NutritionApi.csproj
-RUN dotnet publish SITech.NutritionApi/SITech.NutritionApi.csproj -c Release -o /publish
+WORKDIR "/src/SITech.NutritionApi"
+RUN dotnet publish "SITech.NutritionApi.csproj" -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /publish
-
-COPY --from=build /publish .
+WORKDIR /app
+COPY --from=build /app/publish .
 
 ENV ASPNETCORE_URLS=http://0.0.0.0:$PORT
 
-ENTRYPOINT ["dotnet","SITech.NutritionApi.dll"]
+ENTRYPOINT ["dotnet", "SITech.NutritionApi.dll"]

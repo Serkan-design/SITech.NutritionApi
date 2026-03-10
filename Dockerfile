@@ -3,9 +3,8 @@ WORKDIR /src
 
 COPY . .
 
-WORKDIR /src/SITech.NutritionApi
-RUN dotnet restore
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet restore SITech.NutritionApi/SITech.NutritionApi.csproj
+RUN dotnet publish SITech.NutritionApi/SITech.NutritionApi.csproj -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app

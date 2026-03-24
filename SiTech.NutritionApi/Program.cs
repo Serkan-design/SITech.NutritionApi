@@ -3,6 +3,7 @@
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+// 🔥 Swagger sadece development
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddSwaggerGen();
@@ -10,21 +11,25 @@ if (builder.Environment.IsDevelopment())
 
 var app = builder.Build();
 
-// 🔥 ANA SAYFA = index.html
+// 🔥 STATIC FILE (index.html garanti)
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// 🔥 Swagger sadece development
+// 🔥 Swagger sadece development ve /swagger altında
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
+
     app.UseSwaggerUI(c =>
     {
-        c.RoutePrefix = "swagger"; // sadece /swagger
+        c.RoutePrefix = "swagger"; // 🔥 ROOT'U ELE GEÇİREMEZ
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Nutrition API V1");
     });
 }
 
-//app.UseHttpsRedirection();
+// 🔥 HTTPS KAPALI (docker için doğru)
+/// app.UseHttpsRedirection();
+
 app.UseAuthorization();
 
 app.MapControllers();

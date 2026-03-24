@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition AI</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url("https://images.unsplash.com/photo-1490645935967-10de6ba17061");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-top: 20px;
+        }
+
+        .subtitle {
+            opacity: 0.8;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background: #00ff88;
+            color: black;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+            .btn:hover {
+                transform: scale(1.05);
+            }
+
+        .card {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .metric {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+
+        canvas {
+            max-width: 250px !important;
+            margin: 20px auto;
+        }
+
+        /* 🔥 LOADER */
+        .loader {
+            border: 4px solid rgba(255,255,255,0.2);
+            border-top: 4px solid #00ff88;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 🔥 EKLEDİM */
+        .hidden {
+            display: none;
+        }
+
+        #statusText {
+            margin-top: 10px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 22px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🍗 Nutrition AI</h1>
+
+        <div class="subtitle">
+            Yiyeceğiniz besinin kalorisi ve değerlerini öğrenmek için fotoğraf çek 📸
+        </div>
+
+        <div class="btn" onclick="openCamera()">
+            📸 Fotoğraf Çek
+        </div>
+
+        <input type="file" id="camera" accept="image/*" capture="environment" hidden>
+
+        <!-- 🔥 LOADER -->
+        <div id="loader" class="loader hidden"></div>
+
+        <!-- 🔥 EKLEDİM -->
+        <div id="statusText"></div>
+
+        <div id="resultBox" class="card hidden">
+
+            <h3>Analiz Sonucu</h3>
+
+            <div class="metric">🔥 <span id="cal">-</span> kcal</div>
+            <div class="metric">💪 Protein: <span id="protein">-</span> g</div>
+            <div class="metric">🍞 Karbonhidrat: <span id="carbs">-</span> g</div>
+            <div class="metric">🧈 Yağ: <span id="fat">-</span> g</div>
+
+            <!-- 🔥 CHART -->
+            <canvas id="chart"></canvas>
+
+            <p id="desc"></p>
+
+            <div class="btn" onclick="speak()">🔊 Sesli Anlat</div>
+
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>

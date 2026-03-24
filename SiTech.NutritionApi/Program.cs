@@ -1,5 +1,4 @@
-
-namespace SITech.NutritionApi
+﻿namespace SITech.NutritionApi
 {
     public class Program
     {
@@ -10,23 +9,25 @@ namespace SITech.NutritionApi
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            // 🔥 Swagger artık her zaman açık + /swagger altında
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+                c.RoutePrefix = "swagger";
+            });
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            // 🔥 FRONTEND (wwwroot) aktif
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 

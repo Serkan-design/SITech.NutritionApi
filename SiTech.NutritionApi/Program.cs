@@ -2,23 +2,29 @@
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSwaggerGen();
+}
 
 var app = builder.Build();
 
-// ❌ Swagger sadece developmentta
+// 🔥 ANA SAYFA = index.html
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+// 🔥 Swagger sadece development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.RoutePrefix = "swagger"; // sadece /swagger
+    });
 }
 
-// 🔥 FRONTEND
-app.UseDefaultFiles();   // index.html açar
-app.UseStaticFiles();   // wwwroot aktif
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();

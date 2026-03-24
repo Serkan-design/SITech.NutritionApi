@@ -1,5 +1,8 @@
 ﻿let lastText = "";
 
+// 🔥 AKILLI API (local + server otomatik)
+const API_BASE = window.location.origin;
+
 const camera = document.getElementById("camera");
 const loader = document.getElementById("loader");
 const resultBox = document.getElementById("resultBox");
@@ -9,7 +12,7 @@ function openCamera() {
     camera.click();
 }
 
-// 🔥 BURASI KRİTİK (DOMContentLoaded fix)
+// 📸 FOTO SEÇİLDİ
 camera.addEventListener("change", async function (e) {
 
     const file = e.target.files[0];
@@ -19,22 +22,26 @@ camera.addEventListener("change", async function (e) {
     formData.append("file", file);
 
     loader.classList.remove("hidden");
-    statusText.innerText = "Hesaplanıyor...";
+    statusText.innerText = "AI analiz ediyor... 🧠";
     resultBox.classList.add("hidden");
 
     try {
-        const res = await fetch("/api/nutrition/analiz", {
+        const res = await fetch(`${API_BASE}/api/nutrition/analiz`, {
             method: "POST",
             body: formData
         });
 
+        if (!res.ok) {
+            throw new Error("API ERROR: " + res.status);
+        }
+
         const data = await res.json();
         console.log("DATA:", data);
 
-        document.getElementById("cal").innerText = data.kalori;
-        document.getElementById("protein").innerText = data.protein;
-        document.getElementById("carbs").innerText = data.karbonhidrat;
-        document.getElementById("fat").innerText = data.yag;
+        document.getElementById("cal").innerText = data.kalori ?? 0;
+        document.getElementById("protein").innerText = data.protein ?? 0;
+        document.getElementById("carbs").innerText = data.karbonhidrat ?? 0;
+        document.getElementById("fat").innerText = data.yag ?? 0;
 
         lastText = `${data.yemek_adi || "Yemek"} yaklaşık ${data.kalori || 0} kalori içeriyor.`;
         document.getElementById("desc").innerText = lastText;
@@ -47,12 +54,15 @@ camera.addEventListener("change", async function (e) {
     } catch (err) {
         console.error(err);
         statusText.innerText = "API hatası ❌";
+    } finally {
+        loader.classList.add("hidden");
     }
 
-    loader.classList.add("hidden");
+    camera.value = "";
 });
 
-// 🔥 CHART
+
+// 📊 CHART
 function renderChart(data) {
     const ctx = document.getElementById("chart");
 
@@ -74,10 +84,13 @@ function renderChart(data) {
                     "#4facfe",
                     "#f093fb",
                     "#f5576c"
-                ]
+                ],
+                borderWidth: 2
             }]
         },
         options: {
+            responsive: true,
+            cutout: "65%",
             plugins: {
                 legend: {
                     labels: {
@@ -89,9 +102,14 @@ function renderChart(data) {
     });
 }
 
-// 🔊 ses
+
+// 🔊 SES
 function speak() {
+    if (!lastText) return;
+
     const utter = new SpeechSynthesisUtterance(lastText);
     utter.lang = "tr-TR";
+
+    speechSynthesis.cancel();
     speechSynthesis.speak(utter);
 }

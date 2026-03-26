@@ -2,19 +2,18 @@
 
 builder.Services.AddControllers();
 
-// 🔥 SWAGGER EKLE
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
 
-// 🔥 STATIC FILE
+// ✅ STATIC FILES ÖNE AL
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// 🔥 SWAGGER AKTİF
+// 🔥 SWAGGER EN ALTA
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(c =>
+{
+    c.RoutePrefix = "swagger";
+});
 
 app.UseAuthorization();
 

@@ -4,11 +4,14 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// ✅ STATIC FILES ÖNE AL
+// 🔥 STATIC FILES
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// 🔥 SWAGGER EN ALTA
+// 🔥 ROOT → index.html zorla
+app.MapFallbackToFile("index.html");
+
+// 🔥 SWAGGER AYRI YOLDA
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {

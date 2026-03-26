@@ -8,10 +8,10 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// 🔥 ROOT → index.html zorla
+// 🔥 ROOT ZORLA INDEX
 app.MapFallbackToFile("index.html");
 
-// 🔥 SWAGGER AYRI YOLDA
+// 🔥 SWAGGER
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {

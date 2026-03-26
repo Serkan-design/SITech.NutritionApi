@@ -2,15 +2,20 @@
 
 builder.Services.AddControllers();
 
+// 🔥 SWAGGER EKLE
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // 🔥 STATIC FILE
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// ❌ SWAGGER YOK ARTIK
+// 🔥 SWAGGER AKTİF
+app.UseSwagger();
+app.UseSwaggerUI();
 
-//app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
